@@ -6,7 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "active",
+    "window",
+    "windows",
+    "discord",
+    "status",
+    "games",
+    "process",
+    "window",
+    "running",
+    "manager"
+  ],
   "author": "supertiger1234",
   "license": "ISC",
   "dependencies": {
@@ -20,5 +31,5 @@
   "bugs": {
     "url": "https://github.com/supertiger1234/active-window-listener/issues"
   },
-  "homepage": "https://github.com/supertiger1234/active-window-listener#readme"
+  "homepage": "https://github.com/supertiger1234/active-window-listener#readme",
 }
