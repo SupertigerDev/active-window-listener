@@ -1,4 +1,4 @@
-# ActiveWindowListener
+# Active Window Listener
 Listen to active windows by specifying them
 
 This will be used in Nertivia in the future to show playing status and more!
