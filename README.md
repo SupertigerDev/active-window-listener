@@ -16,8 +16,8 @@ listener.changed(data => {
 This should output an object:
 ```json
 {
-    title: "#Epic - Discord",
-    pid: 1234,
+    "title": "#Epic - Discord",
+    "pid": 1234,
 }
 ```
 
