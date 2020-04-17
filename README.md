@@ -5,7 +5,7 @@ This will be used in Nertivia in the future to show playing status and more!
 
 ## Usage
 ```js
-const ActiveWindowListener = require("./main");
+const ActiveWindowListener = require("./active-window-listener");
 
 const listener = new ActiveWindowListener(["Discord.exe", "Telegram.exe", "Code.exe"]);
 
