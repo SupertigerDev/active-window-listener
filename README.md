@@ -10,8 +10,15 @@ const ActiveWindowListener = require("./main");
 const listener = new ActiveWindowListener(["Discord.exe", "Telegram.exe", "Code.exe"]);
 
 listener.changed(data => {
-	console.log("Active: ", data)
+    console.log("Active: ", data)
 })
+```
+This should output an object:
+```json
+{
+    title: "#Epic - Discord",
+    pid: 1234,
+}
 ```
 
 #Package used
