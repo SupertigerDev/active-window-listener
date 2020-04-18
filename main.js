@@ -16,12 +16,9 @@ module.exports = {
 		}
 	
 		changed(cb) {
-			this.eventEmitter.on("changed", data => {
-				if (!data) return cb(undefined);
-				cb({
-					title: data.getTitle(),
-					pid: data.processId,
-				})
+			this.eventEmitter.on("changed", window => {
+				if (!window) return cb(undefined);
+				cb(window)
 			})
 		}
 	

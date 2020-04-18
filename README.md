@@ -13,13 +13,8 @@ listener.changed(data => {
     console.log("Active: ", data)
 })
 ```
-This should output an object:
-```json
-{
-    "title": "#Epic - Discord",
-    "pid": 1234,
-}
-```
+This should output an object of Window Class properties. See the package used below to view the methods.
+
 There is also a function to get windows that are opened. I needed to filter out some of the components from the "Windows" Directory in order to get the proper list.
 ```js
 const ActiveWindowListener = require("active-window-listener");
