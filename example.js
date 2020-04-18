@@ -7,3 +7,6 @@ listener.changed(data => {
 	console.log("Active: ", data)
 })
 
+
+
+console.log(listener.getWindows())

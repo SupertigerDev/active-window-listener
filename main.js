@@ -14,6 +14,17 @@ module.exports = class ProcessListen {
 		});
 	}
 
+	getWindows() {
+		const filteredFolder = ["Windows"];
+		const windowsArr = nodeProcessWindows.windowManager.getWindows().filter((window, index, self) => {
+			const path = window.path.split('\\');
+			if (window.getTitle() === "") return false;
+			if (path[1] && filteredFolder.includes(path[1])) return false;
+			return index === self.findIndex(w => (w.path === window.path))
+		})
+		return windowsArr
+	}
+
 	changed(cb) {
 		this.eventEmitter.on("changed", data => {
 			if (!data) return cb(undefined);
@@ -67,7 +78,7 @@ module.exports = class ProcessListen {
 		}
 
 
-		setTimeout(() => this.loop(), 1000);
+		setTimeout(() => this.loop(), 5000);
 	}
 
 }
