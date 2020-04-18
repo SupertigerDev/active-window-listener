@@ -1,7 +1,7 @@
 
 const ActiveWindowListener = require("./main");
 
-const listener = new ActiveWindowListener(["Discord.exe", "Telegram.exe", "Code.exe"]);
+const listener = new ActiveWindowListener.ProcessListen(["Discord.exe", "Telegram.exe", "Code.exe"]);
 
 listener.changed(data => {
 	console.log("Active: ", data)
@@ -9,4 +9,4 @@ listener.changed(data => {
 
 
 
-console.log(listener.getWindows())
+console.log(ActiveWindowListener.getWindows())
