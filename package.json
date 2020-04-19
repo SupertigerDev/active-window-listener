@@ -2,7 +2,8 @@
   "name": "active-window-listener",
   "version": "1.0.3",
   "description": "Listen to active windows by specifying them",
-  "main": "main.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,7 +24,9 @@
   "dependencies": {
     "node-window-manager": "^2.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^13.13.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/supertiger1234/active-window-listener.git"

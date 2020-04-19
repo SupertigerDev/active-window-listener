@@ -5,9 +5,9 @@ This will be used in https://nertivia.tk (My chat web app project) in the future
 
 ## Usage
 ```js
-const ActiveWindowListener = require("active-window-listener");
+const { ProcessListen } = require("active-window-listener");
 
-const listener = new ActiveWindowListener.ProcessListen(["Discord.exe", "Telegram.exe", "Code.exe"]);
+const listener = new ProcessListen(["Discord.exe", "Telegram.exe", "Code.exe"]);
 
 listener.changed(data => {
     console.log("Active: ", data)
@@ -17,9 +17,9 @@ This should output an object of Window Class properties. See the package used be
 
 There is also a function to get windows that are opened. I needed to filter out some of the components from the "Windows" Directory in order to get the proper list.
 ```js
-const ActiveWindowListener = require("active-window-listener");
+const { getWindows } = require("active-window-listener");
 
-console.log(ActiveWindowListener.getWindows())
+console.log(getWindows())
 ```
 This should output an array of Window Class properties. See the package used below to view the methods.
 
