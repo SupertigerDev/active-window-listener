@@ -20,6 +20,7 @@ export class ProcessListen {
 	}
 
 	clearEvent(){
+		this.eventEmitter.removeAllListeners('changed')
 		this.stopLoop = true;
 	}
 
