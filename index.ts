@@ -7,14 +7,20 @@ export class ProcessListen {
 	processArr: string[];
 	activeWindow?: Window;
 	openedProcesses: Window[];
+	stopLoop: boolean;
 	constructor(processArr: string[]) {
 		this.eventEmitter = new EventEmitter.EventEmitter();
 		this.processArr = processArr;
 		this.activeWindow = undefined;
 		this.openedProcesses = [];
+		this.stopLoop = false;
 		setTimeout(() => {
 			this.loop(true);
 		});
+	}
+
+	clearEvent(){
+		this.stopLoop = true;
 	}
 
 	changed(cb: (name?: Window) => void) {
@@ -24,7 +30,8 @@ export class ProcessListen {
 		})
 	}
 
-	async loop(started?: boolean) {
+	private async loop(started?: boolean) {
+		if (this.stopLoop) return;
 		const processes = windowManager.getWindows();
 
 		const newOpenedProcesses = this.processArr.map(pa => {
@@ -89,14 +96,3 @@ export function getWindows () {
 	return arr;
 
 }
-
-// export function getWindows () {
-// 	const filteredFolder = ["Windows"];
-// 	const windowsArr = windowManager.getWindows().filter((window, index, self) => {
-// 		const path = window.path.split('\\');
-// 		if (window.getTitle() === "") return false;
-// 		if (path[1] && filteredFolder.includes(path[1])) return false;
-// 		return index === self.findIndex(w => (w.path === window.path))
-// 	})
-// 	return windowsArr
-// }
