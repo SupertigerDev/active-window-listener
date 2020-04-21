@@ -33,45 +33,47 @@ export class ProcessListen {
 
 	private async loop(started?: boolean) {
 		if (this.stopLoop) return;
-		const processes = windowManager.getWindows();
 
-		const newOpenedProcesses = this.processArr.map(pa => {
-			return processes.find(p => {
-				return p.path.indexOf(pa, p.path.length - pa.length) != -1;
-			})
-		}).filter(pa => pa)
-
-		const closedProgramsArr = this.openedProcesses.filter(x => {
-			return !newOpenedProcesses.find(a => a?.path === x.path)
-		});
-
-		if (started) {
-			if (newOpenedProcesses.length) {
-				this.eventEmitter.emit('changed', newOpenedProcesses[0]);
-				this.activeWindow = newOpenedProcesses[0];
-			}
-		}
-
-		closedProgramsArr.forEach(cp => {
-			if (cp.path === this.activeWindow?.path) {
-				if (newOpenedProcesses.length) {
-					this.eventEmitter.emit('changed', newOpenedProcesses[0]);
-					this.activeWindow = newOpenedProcesses[0];
-				} else {
-					this.eventEmitter.emit('changed', undefined);
-					this.activeWindow = undefined
-				}
-			}
-		})
-
-
-		this.openedProcesses = newOpenedProcesses as Window[];
 
 		const activeWindow = windowManager.getActiveWindow();
 
 		if ((!this.activeWindow || this.activeWindow.processId !== activeWindow.processId) && this.processArr.find(pa => activeWindow.path.indexOf(pa, activeWindow.path.length - pa.length) != -1)) {
 			this.eventEmitter.emit('changed', activeWindow);
 			this.activeWindow = activeWindow;
+		} else {
+			const processes = windowManager.getWindows();
+
+			const newOpenedProcesses = this.processArr.map(pa => {
+				return processes.find(p => {
+					return p.path.indexOf(pa, p.path.length - pa.length) != -1;
+				})
+			}).filter(pa => pa)
+	
+			const closedProgramsArr = this.openedProcesses.filter(x => {
+				return !newOpenedProcesses.find(a => a?.path === x.path)
+			});
+	
+			if (started) {
+				if (newOpenedProcesses.length) {
+					this.eventEmitter.emit('changed', newOpenedProcesses[0]);
+					this.activeWindow = newOpenedProcesses[0];
+				}
+			}
+	
+			closedProgramsArr.forEach(cp => {
+				if (cp.path === this.activeWindow?.path) {
+					if (newOpenedProcesses.length) {
+						this.eventEmitter.emit('changed', newOpenedProcesses[0]);
+						this.activeWindow = newOpenedProcesses[0];
+					} else {
+						this.eventEmitter.emit('changed', undefined);
+						this.activeWindow = undefined
+					}
+				}
+			})
+	
+	
+			this.openedProcesses = newOpenedProcesses as Window[];
 		}
 
 
