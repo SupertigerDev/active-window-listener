@@ -1,5 +1,5 @@
 
-import {Window, windowManager} from 'node-window-manager';
+import { Window, windowManager } from 'node-window-manager';
 import EventEmitter from 'events';
 
 export class ProcessListen {
@@ -19,7 +19,7 @@ export class ProcessListen {
 		});
 	}
 
-	clearEvent(){
+	clearEvent() {
 		this.eventEmitter.removeAllListeners('changed')
 		this.stopLoop = true;
 	}
@@ -34,32 +34,20 @@ export class ProcessListen {
 	private async loop(started?: boolean) {
 		if (this.stopLoop) return;
 
-
 		const activeWindow = windowManager.getActiveWindow();
+		const processes = windowManager.getWindows();
 
-		if ((!this.activeWindow || this.activeWindow.processId !== activeWindow.processId) && this.processArr.find(pa => activeWindow.path.indexOf(pa, activeWindow.path.length - pa.length) != -1)) {
-			this.eventEmitter.emit('changed', activeWindow);
-			this.activeWindow = activeWindow;
-		} else {
-			const processes = windowManager.getWindows();
+		const newOpenedProcesses = this.processArr.map(pa => {
+			return processes.find(p => {
+				return p.path.indexOf(pa, p.path.length - pa.length) != -1;
+			})
+		}).filter(pa => pa)
 
-			const newOpenedProcesses = this.processArr.map(pa => {
-				return processes.find(p => {
-					return p.path.indexOf(pa, p.path.length - pa.length) != -1;
-				})
-			}).filter(pa => pa)
-	
-			const closedProgramsArr = this.openedProcesses.filter(x => {
-				return !newOpenedProcesses.find(a => a?.path === x.path)
-			});
-	
-			if (started) {
-				if (newOpenedProcesses.length) {
-					this.eventEmitter.emit('changed', newOpenedProcesses[0]);
-					this.activeWindow = newOpenedProcesses[0];
-				}
-			}
-	
+		const closedProgramsArr = this.openedProcesses.filter(x => {
+			return !newOpenedProcesses.find(a => a?.path === x.path)
+		});
+
+		if (!started) {
 			closedProgramsArr.forEach(cp => {
 				if (cp.path === this.activeWindow?.path) {
 					if (newOpenedProcesses.length) {
@@ -71,8 +59,23 @@ export class ProcessListen {
 					}
 				}
 			})
-	
-	
+		}
+
+
+		if ((!this.activeWindow || this.activeWindow.processId !== activeWindow.processId) && this.processArr.find(pa => activeWindow.path.indexOf(pa, activeWindow.path.length - pa.length) != -1)) {
+			this.eventEmitter.emit('changed', activeWindow);
+			this.activeWindow = activeWindow;
+		} else {
+
+
+			if (started) {
+				if (newOpenedProcesses.length) {
+					this.eventEmitter.emit('changed', newOpenedProcesses[0]);
+					this.activeWindow = newOpenedProcesses[0];
+				}
+			}
+
+
 			this.openedProcesses = newOpenedProcesses as Window[];
 		}
 
@@ -81,7 +84,7 @@ export class ProcessListen {
 	}
 }
 
-export function getWindows () {
+export function getWindows() {
 	const filteredFolder = ["Windows"];
 
 	const arr: Window[] = [];
@@ -95,7 +98,7 @@ export function getWindows () {
 		if (window.getTitle() === "") continue;
 		if (!window.isWindow()) continue;
 		arr.push(window);
-	}	
+	}
 	return arr;
 
 }
