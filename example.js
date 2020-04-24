@@ -9,4 +9,6 @@ listener.changed(data => {
 
 
 
-console.log(getWindows())
+getWindows().forEach(w => {
+	w.getExif().then(tags => {console.log(tags.FileDescription)})
+})

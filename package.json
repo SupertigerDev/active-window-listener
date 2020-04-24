@@ -1,6 +1,6 @@
 {
   "name": "active-window-listener",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Listen to active windows by specifying them",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,6 +22,8 @@
   "author": "supertiger1234",
   "license": "ISC",
   "dependencies": {
+    "@types/luxon": "^1.22.0",
+    "exiftool-vendored": "^11.2.0",
     "node-window-manager": "^2.2.1"
   },
   "devDependencies": {

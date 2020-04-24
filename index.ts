@@ -1,6 +1,27 @@
 
 import { Window, windowManager } from 'node-window-manager';
 import EventEmitter from 'events';
+import {exiftool, Tags} from 'exiftool-vendored';
+
+declare module "node-window-manager" {
+	interface Window {
+		getExif(): Promise<Tags> | undefined
+	}
+}
+declare module "exiftool-vendored" {
+	interface Tags {
+		FileDescription: String | undefined
+	}
+}
+
+
+Window.prototype.getExif = function () {
+	return exiftool.read(this.path);
+}
+
+
+
+
 
 export class ProcessListen {
 	eventEmitter: EventEmitter.EventEmitter;
@@ -36,7 +57,6 @@ export class ProcessListen {
 
 		const activeWindow = windowManager.getActiveWindow();
 		const processes = windowManager.getWindows();
-
 		const newOpenedProcesses = this.processArr.map(pa => {
 			return processes.find(p => {
 				return p.path.indexOf(pa, p.path.length - pa.length) != -1;
