@@ -92,6 +92,8 @@ export class ProcessListen {
 				if (newOpenedProcesses.length) {
 					this.eventEmitter.emit('changed', newOpenedProcesses[0]);
 					this.activeWindow = newOpenedProcesses[0];
+				} else {
+					this.eventEmitter.emit('changed', undefined);
 				}
 			}
 
